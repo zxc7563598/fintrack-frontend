@@ -81,9 +81,10 @@ function loginHandler() {
                     'password': password.value
                 },
             }).then((res) => {
-                console.log(res)
                 if (res.code == 0) {
                     loading.value = false;
+                    localStorage.setItem('access_token', res.data.access_token)
+                    localStorage.setItem('refresh_token', res.data.refresh_token)
                     router.push('/')
                 } else {
                     showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })

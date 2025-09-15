@@ -47,6 +47,13 @@ const routes = [{
         metaTags: defaultMeta
     }
 }, {
+    path: '/register',
+    component: () => import('../pages/register.vue'),
+    meta: {
+        title: defaultTitle,
+        metaTags: defaultMeta
+    }
+}, {
     // 定义404路由
     path: '/404',
     component: () => import('../pages/notfound.vue'),

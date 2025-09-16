@@ -30,20 +30,25 @@ const service = axios.create({
 	baseURL: config.baseUrl,
 	timeout: 10000,
 	headers: { 'Content-Type': 'application/json' },
+	file: false
 })
 
 // 请求拦截器
 service.interceptors.request.use(
 	async function (cfg) {
+		cfg.headers = cfg.headers || {}
 		if (!cfg._rawData) {
 			cfg._rawData = { ...(cfg.data || {}) }
 		}
 		let access_token = localStorage.getItem('access_token')
-		if (!cfg.data) cfg.data = {}
-		cfg.data = encryptRequest(cfg._rawData, {
-			rsaPubKey: await loadPublicKey(),
-		})
-		cfg.headers = cfg.headers || {}
+		if (cfg.file) {
+			cfg.headers['Content-Type'] = 'multipart/form-data'
+		} else {
+			if (!cfg.data) cfg.data = {}
+			cfg.data = encryptRequest(cfg._rawData, {
+				rsaPubKey: await loadPublicKey(),
+			})
+		}
 		if (access_token) {
 			cfg.headers['Authorization'] = access_token
 		}

@@ -2,7 +2,7 @@
   <v-app>
     <v-main>
       <router-view></router-view>
-      <v-snackbar v-model="snackbar.visible" :timeout="snackbar.timeout" :color="snackbar.color" variant="tonal">
+      <v-snackbar v-model="snackbar.visible" :timeout="snackbar.timeout" class="elevation-12" :color="snackbar.color">
         <div class="font-weight-bold">{{ snackbar.text }}</div>
         <template #actions>
           <v-btn variant="text" @click="snackbar.visible = false">关闭</v-btn>

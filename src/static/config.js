@@ -5,6 +5,12 @@ export default {
         LoginRegisterHandler: '/api/register',
         LoginHandler: '/api/login',
         RefreshTokenHandler: '/api/refresh-token',
-        AssetOverviewHandler: '/api/asset-overview'
+        AssetOverviewHandler: '/api/asset-overview',
+        UploadAlipayCSVHandler: '/api/file/alipay/upload',
+        GetAlipayCSVOverviewHandler: '/api/file/alipay/overview',
+        StoreAlipayCSVInfoHandler: '/api/file/alipay/store',
+        GetBillListHandler: '/api/bills',
+        GetBillInfoHandler: '/api/bills/info',
+        StoreBillRecordHandler: '/api/bills/save',
     }
 }

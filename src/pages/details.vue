@@ -65,7 +65,7 @@
                                         <div class="me-3 mt-3">
                                             <span>交易列表</span>
                                             <v-btn size="small" class="border-thin border-secondary ml-2"
-                                                @click="addDialog = true">添加</v-btn>
+                                                @click="openEditDialog(0)">添加</v-btn>
                                             <v-btn size="small" class="border-thin border-secondary ml-2"
                                                 @click="importDialog = true">导入</v-btn>
                                         </div>
@@ -79,7 +79,7 @@
                                             </template>
                                             <template #append-inner="slotProps">
                                                 <v-icon
-                                                    @click="getDataList({ page: 1, itemsPerPage: itemsPerPage, sortBy: sorting })">mdi-check</v-icon>
+                                                    @click="getDataList({ page: 1, itemsPerPage: itemsPerPage, sortBy: currentSorting })">mdi-check</v-icon>
                                             </template>
                                         </v-text-field>
                                     </v-col>
@@ -89,7 +89,8 @@
                         <v-main class="d-flex">
                             <v-data-table-server hover striped="even" v-model:items-per-page="itemsPerPage"
                                 :headers="headers" height="200" :items="serverItems" :items-length="totalItems"
-                                :loading="loading" item-value="name" @update:options="getDataList">
+                                :loading="loading" item-value="name" @update:options="getDataList"
+                                @click:row="onRowClick">
                                 <template #item.amount="{ item }">
                                     <span v-if="item.income_type == 1" class="text-income">
                                         {{ item.amount }}
@@ -109,7 +110,8 @@
                                 </template>
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
-                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark }}</v-tooltip>
+                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
+                                    }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
                         </v-main>
@@ -119,14 +121,14 @@
         </v-row>
     </v-container>
     <BillImport v-model="importDialog"></BillImport>
-    <BillAdd v-model="addDialog"></BillAdd>
+    <BillEdit v-model="editDialog" :id="editId"></BillEdit>
 </template>
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import dayjs from 'dayjs'
 import BillImport from '@/components/BillImport.vue'
-import BillAdd from '@/components/BillAdd.vue'
+import BillEdit from '@/components/BillEdit.vue'
 import httpRequest from '../static/request.js';
 import config from '../static/config';
 import { showSnackbar } from '../static/useSnackbar.js'
@@ -135,7 +137,17 @@ const loading = ref(false)
 
 // 导入弹窗
 const importDialog = ref(false)
-const addDialog = ref(false)
+const editDialog = ref(false)
+const editId = ref(0);
+function openEditDialog(id = 0) {
+    editId.value = id
+    editDialog.value = true
+}
+
+// 每行点击
+function onRowClick(event, row) {
+    openEditDialog(row.item.id)
+}
 
 // 日期控制
 const start_menu = ref(false)
@@ -261,9 +273,11 @@ const headers = ref([
 ])
 const serverItems = ref([])
 const totalItems = ref(0)
-const sorting = ref(null)
+const currentSorting = ref(null)
+const currentPage = ref(null)
 function getDataList({ page, itemsPerPage, sortBy }) {
-    sorting.value = sortBy
+    currentSorting.value = sortBy
+    currentPage.value = page
     loading.value = true
     httpRequest({
         url: config.interface.GetBillListHandler,
@@ -293,9 +307,21 @@ function getDataList({ page, itemsPerPage, sortBy }) {
 watch(
     [start_formatted_date, end_formatted_date, income_type],
     () => {
-        getDataList({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: sorting.value })
+        getDataList({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
     }
 )
+
+watch(importDialog, (v) => {
+    if (!v) {
+        getDataList({ page: currentPage.value, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
+    }
+})
+
+watch(editDialog, (v) => {
+    if (!v) {
+        getDataList({ page: currentPage.value, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
+    }
+})
 
 // 时间戳转换
 const formatTime = (timestamp) => {

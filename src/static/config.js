@@ -12,5 +12,6 @@ export default {
         GetBillListHandler: '/api/bills',
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',
+        DeleteBillRecordHandler: '/api/bills/delete',
     }
 }

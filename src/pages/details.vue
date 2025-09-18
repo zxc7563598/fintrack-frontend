@@ -87,7 +87,7 @@
                             </template>
                         </v-app-bar>
                         <v-main class="d-flex">
-                            <v-data-table-server hover striped="even" v-model:items-per-page="itemsPerPage"
+                            <v-data-table-server hover striped="even" v-model:items-per-page="itemsPerPage" :page="currentPage"
                                 :headers="headers" height="200" :items="serverItems" :items-length="totalItems"
                                 :loading="loading" item-value="name" @update:options="getDataList"
                                 @click:row="onRowClick">
@@ -110,8 +110,7 @@
                                 </template>
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
-                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
-                                    }}</v-tooltip>
+                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
                         </v-main>
@@ -274,8 +273,9 @@ const headers = ref([
 const serverItems = ref([])
 const totalItems = ref(0)
 const currentSorting = ref(null)
-const currentPage = ref(null)
+const currentPage = ref(1)
 function getDataList({ page, itemsPerPage, sortBy }) {
+    console.log({ page, itemsPerPage, sortBy })
     currentSorting.value = sortBy
     currentPage.value = page
     loading.value = true
@@ -346,7 +346,6 @@ onMounted(() => {
     if (window.innerWidth >= 960) {
         select_drawer.value = true
     }
-    // getDataList({ page: 1, itemsPerPage: 20, sortBy: [{ key: 'trade_time', order: 'desc' }] })
 })
 
 onBeforeUnmount(() => {

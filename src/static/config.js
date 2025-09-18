@@ -13,6 +13,7 @@ export default {
         UploadAlipayZIPHandler: '/api/file/alipay/upload/zip',
         GetAlipayCSVOverviewHandler: '/api/file/alipay/overview',
         StoreAlipayCSVInfoHandler: '/api/file/alipay/store',
+        GetAlipayBillMailHandler: '/api/file/alipay/email',
         GetBillListHandler: '/api/bills',
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',

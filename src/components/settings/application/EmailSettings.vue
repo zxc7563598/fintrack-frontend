@@ -153,10 +153,23 @@ onMounted(() => {
 </script>
 
 <template>
-
     <v-card flat>
         <v-card-text>
             <v-row dense>
+                <v-col cols="12">
+                    <v-alert :border="'start'" color="" title="温馨提示" variant="tonal">
+                        <p>绑定邮箱后可以直接通过邮箱快速导入账单。</p>
+                        <p>绑定时确保已开启 IMAP/SMTP 服务，并使用“授权码”作为密码登录。</p>
+                        <p>如使用 QQ、163、Gmail 等邮箱，请前往邮箱【设置 → 账户 → 开启服务 → 获取授权码】中开启 IMAP 并生成授权码</p>
+                        <p>授权码不同于登录密码。建议使用常用邮箱并保持可用状态。</p>
+                        <p>以QQ邮箱为例，授权码获取方式可以参考：
+                            <a target="_blank" class="text-primary font-weight-bold text-decoration-none"
+                                href="https://wx.mail.qq.com/list/readtemplate?name=app_intro.html#/agreement/authorizationCode">
+                                官方文档
+                            </a>
+                        </p>
+                    </v-alert>
+                </v-col>
                 <v-col cols="12" md="6" v-for="(item, index) in userEmailData" :key="index">
                     <v-card hover class="w-100 fill-height">
                         <v-card-title>

@@ -2,7 +2,6 @@
 import { ref, watch } from 'vue'
 import AlipayFile from '@/components/help/AlipayFile.vue'
 import AlipayZip from '@/components/help/AlipayZip.vue'
-import AlipayMail from '@/components/help/AlipayMail.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -21,11 +20,11 @@ const items = [
         value: 2,
         subtitle: '由支付宝App导出的交易流水证明发送到邮箱的.zip压缩包',
     },
-    {
-        title: '自动读取支付宝账单',
-        value: 3,
-        subtitle: '在支付宝App导出交易流水证明到邮箱即可自动获取',
-    },
+    // {
+    //     title: '自动读取支付宝账单',
+    //     value: 3,
+    //     subtitle: '在支付宝App导出交易流水证明到邮箱即可自动获取',
+    // },
 ]
 
 // 窗口启动状态
@@ -51,7 +50,6 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
                     v-model="billType"></v-select>
                 <AlipayFile v-if="billType == 1"></AlipayFile>
                 <AlipayZip v-if="billType == 2"></AlipayZip>
-                <AlipayMail v-if="billType == 3"></AlipayMail>
             </template>
         </v-card>
     </v-dialog>

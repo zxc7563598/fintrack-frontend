@@ -56,8 +56,8 @@
                     </v-list>
                 </v-col>
                 <v-col cols="12" v-if="step == 1">
-                    <v-file-input accept=".csv,text/csv" label="上传 CSV 文件" v-model="billCsv" :loading="loading"
-                        @change="uploadCsv($event.target.files[0])" />
+                    <v-file-input accept=".csv,text/csv" density="compact" variant="underlined" label="上传 CSV 文件"
+                        v-model="billCsv" :loading="loading" @change="uploadCsv($event.target.files[0])" />
                 </v-col>
                 <v-col cols="12" v-if="step == 2" class="d-flex align-center justify-center">
                     <v-card-text class="text-subtitle-2 bg-background" style="max-width: 400px;">

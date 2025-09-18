@@ -1,7 +1,8 @@
 <script setup>
 import { ref, watch } from 'vue'
-import AlipayFile from './help/AlipayFile.vue'
-import AlipayZip from './help/AlipayZip.vue'
+import AlipayFile from '@/components/help/AlipayFile.vue'
+import AlipayZip from '@/components/help/AlipayZip.vue'
+import AlipayMail from '@/components/help/AlipayMail.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -50,6 +51,7 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
                     v-model="billType"></v-select>
                 <AlipayFile v-if="billType == 1"></AlipayFile>
                 <AlipayZip v-if="billType == 2"></AlipayZip>
+                <AlipayMail v-if="billType == 3"></AlipayMail>
             </template>
         </v-card>
     </v-dialog>

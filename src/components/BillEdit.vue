@@ -10,10 +10,15 @@
                 <v-form ref="formRef" v-model="formValid">
                     <v-row>
                         <v-col cols="12">
-                            <v-alert :border="'start'" color="primary" title="温馨提示" variant="tonal">
-                                为了保证数据的完整性和准确性，建议您优先通过 <b>导入账单</b> 的方式录入记录。<br>
-                                手动添加记录仅适用于少量特殊情况（如遗漏的单笔交易）。<br>
-                                如果条件允许，请尽量选择导入方式，这样统计和分析结果会更准确。
+                            <v-alert :border="'start'" color="" title="温馨提示" variant="tonal">
+                                <p>为了保证数据的完整性和准确性，建议您优先通过
+                                    <span class="text-primary font-weight-bold text-decoration-none">
+                                        导入账单
+                                    </span>
+                                    的方式录入记录
+                                </p>
+                                <p>手动添加记录仅适用于少量特殊情况（如遗漏的单笔交易）</p>
+                                <p>如果条件允许，请尽量选择导入方式，这样统计和分析结果会更准确</p>
                             </v-alert>
                         </v-col>
                         <v-col cols="12" md="6">

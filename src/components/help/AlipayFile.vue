@@ -1,5 +1,5 @@
 <template>
-    <v-stepper elevation="0" :model-value="step" :items="items" show-actions>
+    <v-stepper elevation="0" :model-value="step" show-actions>
         <v-stepper-header class="elevation-0">
             <v-stepper-item color="primary" class="elevation-0" :complete="step >= 1">
                 <div class="d-flex align-center">

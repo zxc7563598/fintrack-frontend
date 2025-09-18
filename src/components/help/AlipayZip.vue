@@ -1,5 +1,5 @@
 <template>
-    <v-stepper elevation="0" :model-value="step" :items="items" show-actions>
+    <v-stepper elevation="0" :model-value="step" show-actions>
         <v-stepper-header class="elevation-0">
             <v-stepper-item color="primary" class="elevation-0" :complete="step >= 1">
                 <div class="d-flex align-center">
@@ -56,21 +56,21 @@
                 </v-col>
                 <v-col cols="12" v-if="step == 1">
                     <v-row>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="8">
                             <v-file-input accept=".zip,application/zip" variant="underlined" label="上传 ZIP 文件"
-                                v-model="billZip" :loading="loading" density="compact" />
+                                v-model="billZip" :loading="loading" density="compact" hide-details />
                         </v-col>
-                        <v-col cols="12" md="6">
+                        <v-col cols="12" md="4">
                             <v-text-field label="压缩包密码，可不填" variant="underlined" v-model="zipPassword"
-                                :loading="loading" density="compact"></v-text-field>
+                                :loading="loading" density="compact" hide-details></v-text-field>
                         </v-col>
                         <v-col cols="12">
-                            <v-alert :border="'start'" color="primary" title="温馨提示" variant="tonal">
-                                请上传压缩包及密码（如有）。<br />
-                                上传压缩包后，即可进行下一步操作。<br /><br />
-                                在支付宝 App 导出账单后，系统消息中会收到压缩包解压密码。<br />
-                                如有密码，可选择填写以加快账单读取速度。<br />
-                                若密码不便填写，也可留空，系统将自动尝试解锁压缩包，过程可能需要约 20–60 秒，请耐心等待。
+                            <v-alert :border="'start'" color="" title="温馨提示" variant="tonal">
+                                <p>请上传压缩包及密码（如有）</p>
+                                <p>上传压缩包后，即可进行下一步操作</p>
+                                <p class="mt-3">在支付宝 App 导出账单后，系统消息中会收到压缩包解压密码</p>
+                                <p>如有密码，可选择填写以加快账单读取速度</p>
+                                <p>若密码不便填写，也可留空，系统将自动尝试解锁压缩包，过程可能需要约 20–60 秒，请耐心等待</p>
                             </v-alert>
                         </v-col>
                     </v-row>

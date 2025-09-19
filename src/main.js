@@ -17,6 +17,10 @@ import router from './router/index'
 // Styles
 import 'unfonts.css'
 
+import('vconsole').then(({ default: VConsole }) => {
+    new VConsole()
+})
+
 const app = createApp(App)
 
 registerPlugins(app)

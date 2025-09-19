@@ -1,6 +1,37 @@
+import { detectEnvironment, logEnvironmentInfo } from '../utils/environment.js'
+
+// 在开发环境下打印环境信息
+logEnvironmentInfo()
+
+// 根据环境获取API基础URL
+function getBaseUrl() {
+    const mode = detectEnvironment()
+    switch (mode) {
+        case 'wails':
+            return 'http://127.0.0.1:9090'
+        case 'web':
+        default:
+            return import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:9090'
+    }
+}
+
+// 获取应用标题
+function getAppTitle() {
+    const mode = detectEnvironment()
+    
+    switch (mode) {
+        case 'wails':
+            return import.meta.env.VITE_APP_TITLE || '财务管理系统'
+        case 'web':
+        default:
+            return import.meta.env.VITE_APP_TITLE || '财务管理系统'
+    }
+}
+
 export default {
-    name: "财务管理系统",
-    baseUrl: "http://127.0.0.1:9090",
+    name: getAppTitle(),
+    baseUrl: getBaseUrl(),
+    mode: detectEnvironment(),
     interface: {
         LoginRegisterHandler: '/api/register',
         LoginHandler: '/api/login',

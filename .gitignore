@@ -22,3 +22,4 @@ pnpm-debug.log*
 *.sw?
 
 /public/public_key.pem
+/dist-wails

@@ -18,7 +18,7 @@ function getBaseUrl() {
 // 获取应用标题
 function getAppTitle() {
     const mode = detectEnvironment()
-    
+
     switch (mode) {
         case 'wails':
             return import.meta.env.VITE_APP_TITLE || '财务管理系统'
@@ -42,8 +42,12 @@ export default {
         DeleteUserEmailHandler: '/api/user/email/delete',
         UploadAlipayCSVHandler: '/api/file/alipay/upload/csv',
         UploadAlipayZIPHandler: '/api/file/alipay/upload/zip',
+        UploadWeChatXLSXHandler: '/api/file/wechat/upload/xlsx',
+        UploadWeChatZIPHandler: '/api/file/wechat/upload/zip',
+        GetWeChatXLSXOverviewHandler: '/api/file/wechat/overview',
         GetAlipayCSVOverviewHandler: '/api/file/alipay/overview',
         StoreAlipayCSVInfoHandler: '/api/file/alipay/store',
+        StoreWechatXLSXInfoHandler: '/api/file/wechat/store',
         GetAlipayBillMailHandler: '/api/file/alipay/email',
         GetBillListHandler: '/api/bills',
         GetBillInfoHandler: '/api/bills/info',

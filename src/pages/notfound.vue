@@ -1,92 +1,31 @@
 <template>
-  <div class="console-container">
-    <h2>浏览器控制台</h2>
-    <div class="console-output">
-      <div
-        v-for="(log, index) in logs"
-        :key="index"
-        :class="`console-${log.type}`"
-      >
-        [{{ log.type }}] {{ log.message }}
-      </div>
-    </div>
-    <button @click="clearLogs">清空日志</button>
-  </div>
+  <v-container class="fill-height d-flex flex-column align-center justify-center text-center">
+    <v-icon size="96" color="error">mdi-alert-circle-outline</v-icon>
+    <h1 class="display-1 mt-4">404</h1>
+    <p class="subtitle-1">抱歉，你访问的页面不存在</p>
+    <v-btn color="primary" class="mt-6" @click="goBack">
+      返回上一页
+    </v-btn>
+  </v-container>
 </template>
 
 <script setup>
-import { reactive, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 
-const logs = reactive([])
+const router = useRouter()
 
-// 保存原始 console 方法
-const originalConsole = {
-  log: console.log,
-  warn: console.warn,
-  error: console.error,
-  info: console.info,
+function goBack() {
+  if (window.history.length > 1) {
+    window.history.back()
+  } else {
+    // 如果没有历史记录，则跳到首页
+    router.push('/')
+  }
 }
-
-// 覆写 console 方法
-function overrideConsole() {
-  ['log', 'warn', 'error', 'info'].forEach(type => {
-    console[type] = (...args) => {
-      logs.push({ type, message: args.join(' ') })
-      originalConsole[type](...args)
-    }
-  })
-}
-
-function clearLogs() {
-  logs.splice(0, logs.length)
-}
-
-onMounted(() => {
-  overrideConsole()
-})
 </script>
 
 <style scoped>
-.console-container {
-  padding: 1rem;
-  border: 1px solid #ccc;
-  max-height: 400px;
-  overflow: auto;
-  font-family: monospace;
-  background: #1e1e1e;
-  color: #eee;
-}
-
-.console-output {
-  max-height: 300px;
-  overflow-y: auto;
-  margin-bottom: 1rem;
-}
-
-.console-log {
-  color: #eee;
-}
-
-.console-warn {
-  color: #ffcc00;
-}
-
-.console-error {
-  color: #ff5555;
-}
-
-.console-info {
-  color: #55ffcc;
-}
-
-button {
-  padding: 0.3rem 0.6rem;
-  background: #444;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-button:hover {
-  background: #666;
+.fill-height {
+  min-height: 100vh;
 }
 </style>

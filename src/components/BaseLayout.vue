@@ -15,7 +15,8 @@
                         <template v-slot:prepend v-if="item.icon">
                             <v-icon :icon="item.icon" style="margin-left: 9px;"></v-icon>
                         </template>
-                        <v-list-item-title v-text="item.title"></v-list-item-title>
+                        <v-list-item-title v-text="item.title"
+                            :class="route.path === item.path ? 'font-weight-bold' : ''"></v-list-item-title>
                     </v-list-item>
                     <div v-else class=" mt-4 mb-4 pr-16">
                         <v-divider>{{ item.title }}</v-divider>

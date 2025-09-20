@@ -8,7 +8,7 @@
                             v-model="select_drawer">
                             <v-list class="ml-2 mr-2">
                                 <div v-for="(item, index) in category" :key="index">
-                                    <v-list-item :ripple="false" density="compact" :value="item" color="primary"
+                                    <v-list-item density="compact" :value="item" color="primary"
                                         :active="category_checked === item.id" @click="category_checked = item.id">
                                         <v-list-item-title v-text="item.name"></v-list-item-title>
                                     </v-list-item>
@@ -46,7 +46,7 @@
                             <v-divider>快速选择</v-divider>
                             <v-list class="ml-2 mr-2">
                                 <div v-for="(item, index) in calendar_list" :key="index">
-                                    <v-list-item :ripple="false" density="compact" :value="item" color="primary"
+                                    <v-list-item density="compact" :value="item" color="primary"
                                         @click="selectRange(item)">
                                         <v-list-item-title v-text="item.name"></v-list-item-title>
                                     </v-list-item>
@@ -63,7 +63,8 @@
                                 <v-row dense>
                                     <v-col cols="12" md="6">
                                         <div class="me-3 mt-3">
-                                            <span>交易列表</span>
+                                            <span v-if="category_checked == 1">交易列表</span>
+                                            <span v-if="category_checked == 2">交易日历</span>
                                             <v-btn size="small" class="border-thin border-secondary ml-2"
                                                 @click="openEditDialog(0)">添加</v-btn>
                                             <v-btn size="small" class="border-thin border-secondary ml-2"
@@ -86,11 +87,11 @@
                                 </v-row>
                             </template>
                         </v-app-bar>
-                        <v-main class="d-flex">
-                            <v-data-table-server hover striped="even" v-model:items-per-page="itemsPerPage" :page="currentPage"
-                                :headers="headers" height="200" :items="serverItems" :items-length="totalItems"
-                                :loading="loading" item-value="name" @update:options="getDataList"
-                                @click:row="onRowClick">
+                        <v-main class="d-flex" v-if="category_checked == 1">
+                            <v-data-table-server hover striped="even" v-model:items-per-page="itemsPerPage"
+                                :page="currentPage" :headers="headers" height="200" :items="serverItems"
+                                :items-length="totalItems" :loading="loading" item-value="name"
+                                @update:options="getDataList" @click:row="onRowClick">
                                 <template #item.amount="{ item }">
                                     <span v-if="item.income_type == 1" class="text-income">
                                         {{ item.amount }}
@@ -110,9 +111,32 @@
                                 </template>
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
-                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark }}</v-tooltip>
+                                    <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
+                                    }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
+                        </v-main>
+                        <v-main class="d-flex flex-column" v-if="category_checked == 2">
+                            <v-sheet class="w-100 d-flex">
+                                <v-btn class="ma-2" variant="text" icon @click="$refs.calendarRef.prev()">
+                                    <v-icon>mdi-chevron-left</v-icon>
+                                </v-btn>
+                                <div class="d-flex flex-fill flex-column align-center justify-center text-center">
+                                    <span class="text-h5">{{ calendarTitle }}</span>
+                                    <span>
+                                        总收入: <span class="text-income mr-2">¥ {{ calendarIncome.toFixed(2) }}</span>
+                                        总支出: <span class="text-loss">¥ {{ calendarExpense.toFixed(2) }}</span>
+                                    </span>
+                                </div>
+                                <v-btn class="ma-2" variant="text" icon @click="$refs.calendarRef.next()">
+                                    <v-icon>mdi-chevron-right</v-icon>
+                                </v-btn>
+                            </v-sheet>
+                            <v-sheet class="flex-fill">
+                                <v-calendar ref="calendarRef" v-model="calendar" event-overlap-mode="stack"
+                                    :event-overlap-threshold="30" :events="calendarEvents" type="month"
+                                    @change="getCalendar" @click:event="clickCalendar"></v-calendar>
+                            </v-sheet>
                         </v-main>
                     </v-layout>
                 </v-card>
@@ -131,8 +155,10 @@ import BillEdit from '@/components/BillEdit.vue'
 import httpRequest from '../static/request.js';
 import config from '../static/config';
 import { showSnackbar } from '../static/useSnackbar.js'
+import { useTheme } from 'vuetify'
 
 const loading = ref(false)
+const theme = useTheme()
 
 // 导入弹窗
 const importDialog = ref(false)
@@ -275,7 +301,6 @@ const totalItems = ref(0)
 const currentSorting = ref(null)
 const currentPage = ref(1)
 function getDataList({ page, itemsPerPage, sortBy }) {
-    console.log({ page, itemsPerPage, sortBy })
     currentSorting.value = sortBy
     currentPage.value = page
     loading.value = true
@@ -296,7 +321,7 @@ function getDataList({ page, itemsPerPage, sortBy }) {
         if (res.code == 0) {
             totalItems.value = res.data.total
             serverItems.value = res.data.data
-
+            category_checked.value = 1
         } else {
             showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
         }
@@ -326,6 +351,55 @@ watch(editDialog, (v) => {
 // 时间戳转换
 const formatTime = (timestamp) => {
     return timestamp ? dayjs.unix(timestamp).format('YYYY-MM-DD HH:mm:ss') : '--'
+}
+
+// 日历相关
+const calendarRef = ref(null)
+const calendar = ref('')
+const calendarEvents = ref([])
+const calendarTitle = ref('')
+const calendarIncome = ref(0)
+const calendarExpense = ref(0)
+function getCalendar({ start, end }) {
+    calendarEvents.value = []
+    calendarTitle.value = dayjs(start.date).format("YYYY年MM月")
+    calendarIncome.value = 0
+    calendarExpense.value = 0
+    httpRequest({
+        url: config.interface.GetBillCalendarHandler,
+        method: 'post',
+        data: {
+            "start_at": start.date,
+            "end_at": end.date
+        },
+    }).then((res) => {
+        if (res.code == 0) {
+            res.data.data.forEach((item) => {
+                calendarIncome.value += item.income
+                calendarExpense.value += item.expense
+                calendarEvents.value.push({
+                    name: item.income.toFixed(2),
+                    start: new Date(item.date),
+                    end: new Date(item.date),
+                    color: theme.global.current.value.colors.income,
+                    timed: false,
+                })
+                calendarEvents.value.push({
+                    name: item.expense.toFixed(2),
+                    start: new Date(item.date),
+                    end: new Date(item.date),
+                    color: theme.global.current.value.colors.loss,
+                    timed: false,
+                })
+            })
+        } else {
+            showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
+        }
+    })
+}
+function clickCalendar(nativeEvent, { day }) {
+    start_date.value = day.date
+    end_date.value = day.date
 }
 
 // 页面布局

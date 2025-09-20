@@ -50,6 +50,7 @@ export default {
         StoreWechatXLSXInfoHandler: '/api/file/wechat/store',
         GetAlipayBillMailHandler: '/api/file/alipay/email',
         GetBillListHandler: '/api/bills',
+        GetBillCalendarHandler: '/api/bills/calendar',
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',
         DeleteBillRecordHandler: '/api/bills/delete',

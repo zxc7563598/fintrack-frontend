@@ -2,6 +2,8 @@
 import { ref, watch } from 'vue'
 import AlipayFile from '@/components/help/AlipayFile.vue'
 import AlipayZip from '@/components/help/AlipayZip.vue'
+import WeChatFile from '@/components/help/WeChatFile.vue'
+import WeChatZip from '@/components/help/WeChatZip.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -25,6 +27,16 @@ const items = [
     //     value: 3,
     //     subtitle: '在支付宝App导出交易流水证明到邮箱即可自动获取',
     // },
+    {
+        title: '微信账单文件',
+        value: 4,
+        subtitle: '由微信导出的交易流水证明.xlsx文件',
+    },
+    {
+        title: '微信账单压缩包',
+        value: 5,
+        subtitle: '由微信导出的交易流水证明发送到邮箱的.zip压缩包',
+    },
 ]
 
 // 窗口启动状态
@@ -50,6 +62,8 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
                     v-model="billType"></v-select>
                 <AlipayFile v-if="billType == 1"></AlipayFile>
                 <AlipayZip v-if="billType == 2"></AlipayZip>
+                <WeChatFile v-if="billType == 4"></WeChatFile>
+                <WeChatZip v-if="billType == 5"></WeChatZip>
             </template>
         </v-card>
     </v-dialog>

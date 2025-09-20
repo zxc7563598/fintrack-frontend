@@ -277,11 +277,6 @@ function getData() {
         echarts_income.value.push(item.income)
         echarts_expense.value.push((item.expense * -1))
       })
-      console.log({
-        'echarts_title': echarts_title.value,
-        'echarts_income': echarts_income.value,
-        'echarts_expense': echarts_expense.value,
-      })
     } else {
       showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
     }

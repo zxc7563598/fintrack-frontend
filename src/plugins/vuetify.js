@@ -13,6 +13,7 @@ import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import { VCalendar } from 'vuetify/labs/VCalendar'
 import { zhHans } from 'vuetify/locale'
+import * as directives from 'vuetify/directives'
 
 // 定义自定义主题
 const lightTheme = {
@@ -180,6 +181,7 @@ const darkTheme = {
 }
 
 export default createVuetify({
+  directives,
   components: {
     VCalendar,
   },

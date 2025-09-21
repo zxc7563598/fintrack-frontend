@@ -54,9 +54,9 @@
                                     :items="trade_types_items" v-model="trade_types" multiple chips variant="outlined"
                                     v-if="advancedSearch" @update:menu="advancedSearchUpdate"
                                     @click:clear="advancedSearchUpdate(false)"></v-select>
-                                <v-btn density="default" variant="outlined" size="default" block
+                                <v-btn density="default" color="primary" variant="outlined" size="default" block
                                     :prepend-icon="advancedSearch ? 'mdi-chevron-up' : 'mdi-chevron-down'"
-                                    @click="advancedSearchSwitch">高级搜索</v-btn>
+                                    @click="advancedSearchSwitch" :loading="loading">高级搜索</v-btn>
                             </div>
                             <v-list class="ml-2 mr-2">
                                 <div v-for="(item, index) in calendar_list" :key="index">
@@ -126,7 +126,7 @@
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
                                     <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
-                                    }}</v-tooltip>
+                                        }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
                         </v-main>

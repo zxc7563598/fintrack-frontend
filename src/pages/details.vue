@@ -42,8 +42,22 @@
                                             color="primary"></v-date-picker>
                                     </v-locale-provider>
                                 </v-menu>
+                                <v-select clearable label="账户" color="primary" density="compact"
+                                    :items="payment_method_items" v-model="payment_method" multiple chips
+                                    variant="outlined" v-if="advancedSearch" @update:menu="advancedSearchUpdate"
+                                    @click:clear="advancedSearchUpdate(false)"></v-select>
+                                <v-select clearable label="交易平台" color="primary" density="compact"
+                                    :items="counterpartys_items" v-model="counterpartys" multiple chips
+                                    variant="outlined" v-if="advancedSearch" @update:menu="advancedSearchUpdate"
+                                    @click:clear="advancedSearchUpdate(false)"></v-select>
+                                <v-select clearable label="交易分类" color="primary" density="compact"
+                                    :items="trade_types_items" v-model="trade_types" multiple chips variant="outlined"
+                                    v-if="advancedSearch" @update:menu="advancedSearchUpdate"
+                                    @click:clear="advancedSearchUpdate(false)"></v-select>
+                                <v-btn density="default" variant="outlined" size="default" block
+                                    :prepend-icon="advancedSearch ? 'mdi-chevron-up' : 'mdi-chevron-down'"
+                                    @click="advancedSearchSwitch">高级搜索</v-btn>
                             </div>
-                            <v-divider>快速选择</v-divider>
                             <v-list class="ml-2 mr-2">
                                 <div v-for="(item, index) in calendar_list" :key="index">
                                     <v-list-item density="compact" :value="item" color="primary"
@@ -261,6 +275,44 @@ function selectRange(item) {
 }
 
 // 搜索
+const advancedSearch = ref(false)
+const counterpartys = ref([])
+const counterpartys_items = ref([])
+const payment_method = ref([])
+const payment_method_items = ref([])
+const trade_types = ref([])
+const trade_types_items = ref([])
+function advancedSearchSwitch() {
+    if (advancedSearch.value) {
+        advancedSearch.value = false;
+    } else {
+        loading.value = true
+        httpRequest({
+            url: config.interface.GetBillInfoHandler,
+            method: 'post',
+            data: {
+                id: 0
+            }
+        }).then((res) => {
+            if (res.code == 0) {
+                counterpartys_items.value = res.data.counterpartys
+                payment_method_items.value = res.data.payment_method
+                trade_types_items.value = res.data.trade_types
+                advancedSearch.value = true
+            } else {
+                showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
+            }
+        }).finally(() => {
+            loading.value = false;
+        })
+
+    }
+}
+function advancedSearchUpdate(val) {
+    if (!val) {
+        getDataList({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
+    }
+}
 const category = ref([
     { name: '交易列表', id: 1 },
     { name: '交易日历', id: 2 },
@@ -312,6 +364,9 @@ function getDataList({ page, itemsPerPage, sortBy }) {
             'end_formatted_date': end_formatted_date.value,
             'search': search.value,
             'income_type': income_type.value,
+            'counterpartys': counterpartys.value,
+            'payment_method': payment_method.value,
+            'trade_types': trade_types.value,
             'page': page,
             'items_per_page': itemsPerPage,
             'sort_key': sortBy?.[0]?.key,

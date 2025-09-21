@@ -223,9 +223,9 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import config from '../static/config';
-import httpRequest from '../static/request.js';
-import { showSnackbar } from '../static/useSnackbar.js'
+import config from '@/static/config';
+import httpRequest from '@/static/request.js';
+import { showSnackbar } from '@/static/useSnackbar.js'
 import IncomeAndExpenditure from '@/components/echarts/IncomeAndExpenditure.vue'
 import dayjs from 'dayjs'
 import isoWeek from 'dayjs/plugin/isoWeek'

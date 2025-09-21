@@ -7,10 +7,10 @@ import {
     createWebHistory,
     createWebHashHistory
 } from 'vue-router';
-import config from '../static/config';
+import config from '@/static/config';
 import BaseLayout from '@/components/BaseLayout.vue';
-import Details from '../pages/details.vue';
-import Statistics from '../pages/statistics.vue';
+import Details from '@/pages/details.vue';
+import Statistics from '@/pages/statistics.vue';
 import Home from '@/pages/home.vue';
 let defaultMeta = [
     { name: "viewport", content: "width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no,viewport-fit=cover" },

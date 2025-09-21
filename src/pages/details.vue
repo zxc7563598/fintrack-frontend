@@ -166,9 +166,9 @@ import { ref, onMounted, onBeforeUnmount, computed, watch } from 'vue'
 import dayjs from 'dayjs'
 import BillImport from '@/components/BillImport.vue'
 import BillEdit from '@/components/BillEdit.vue'
-import httpRequest from '../static/request.js';
-import config from '../static/config';
-import { showSnackbar } from '../static/useSnackbar.js'
+import httpRequest from '@/static/request.js';
+import config from '@/static/config';
+import { showSnackbar } from '@/static/useSnackbar.js'
 import { useTheme } from 'vuetify'
 
 const loading = ref(false)

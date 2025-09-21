@@ -1,6 +1,7 @@
 import axios from 'axios'
 import config from './config'
 import { encryptRequest } from 'hejunjie-encrypted-request'
+import router from '@/router'
 
 let cachedPublicKey = null
 let isRefreshing = false
@@ -85,7 +86,7 @@ service.interceptors.response.use(
 						// 重试原请求
 						return service(originalRequest)
 					} else {
-						window.location.href = '/login'
+						router.push('/login')
 					}
 				}).finally(() => {
 					isRefreshing = false

@@ -49,7 +49,7 @@
                         <v-divider></v-divider>
                         <v-list-item :value="'loginout'" slim prepend-icon="mdi-account-arrow-down-outline"
                             color="primary">
-                            <v-list-item-title>退出登录</v-list-item-title>
+                            <v-list-item-title @click="logOut">退出登录</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
@@ -65,11 +65,12 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import config from '../static/config';
+import { useRoute, useRouter } from 'vue-router'
+import config from '@/static/config';
 import UserSettings from '@/components/settings/UserSettings.vue'
 import ApplicationSettings from '@/components/settings/ApplicationSettings.vue'
 
+const router = useRouter();
 const route = useRoute()
 
 // 控制菜单展示
@@ -91,4 +92,10 @@ const menuItems = [
 // 控制弹窗
 const userSettingsDialog = ref(false)
 const applicationSettingsDialog = ref(false)
+
+function logOut() {
+    localStorage.removeItem('access_token')
+    localStorage.removeItem('refresh_token')
+    router.push('/login')
+}
 </script>

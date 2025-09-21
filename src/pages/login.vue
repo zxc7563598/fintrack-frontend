@@ -24,7 +24,7 @@
                         :loading="loading">登陆</v-btn>
                     <div class="mt-4 w-100 d-flex align-center justify-center">
                         还没有账号？
-                        <a href="/register" class="text-primary text-decoration-none">创建新账号</a>
+                        <a href="javascript:;" @click="router.push('/register')" class="text-primary text-decoration-none">创建新账号</a>
                     </div>
                 </v-form>
             </v-col>
@@ -43,9 +43,9 @@
 <script setup>
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import config from '../static/config';
-import httpRequest from '../static/request.js';
-import { showSnackbar } from '../static/useSnackbar.js'
+import config from '@/static/config';
+import httpRequest from '@/static/request.js';
+import { showSnackbar } from '@/static/useSnackbar.js'
 
 const router = useRouter();
 

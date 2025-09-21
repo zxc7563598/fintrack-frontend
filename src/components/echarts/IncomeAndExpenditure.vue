@@ -9,11 +9,16 @@ import {
 import VChart from 'vue-echarts'
 import { useTheme } from 'vuetify'
 import { ref, watch } from 'vue'
+import dayjs from 'dayjs'
+import { useRouter } from 'vue-router'
+
+const router = useRouter()
 
 const props = defineProps({
     income: { type: Array, required: true },
     expense: { type: Array, required: true },
     title: { type: Array, required: true },
+    extra: { type: Array, required: true },
 })
 
 const theme = useTheme()
@@ -88,9 +93,22 @@ watch([() => props.income, () => props.expense, () => props.title], ([newIncome,
     }
 })
 
+function handleChartClick(params) {
+    const year = props.extra[params.dataIndex].year
+    const month = props.extra[params.dataIndex].month
+    const start = dayjs(`${year}-${month}-01`).startOf('month').format('YYYY-MM-DD')
+    const end = dayjs(`${year}-${month}-01`).endOf('month').format('YYYY-MM-DD')
+    router.push({
+        name: 'details',
+        state: {
+            start_date: start,
+            end_date: end
+        }
+    })
+}
 
 </script>
 
 <template>
-    <v-chart style="width:100%;height: 315px;" :option="option" autoresize />
+    <v-chart style="width:100%;height: 315px;" :option="option" autoresize @click="handleChartClick" />
 </template>

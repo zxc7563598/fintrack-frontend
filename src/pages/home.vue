@@ -17,7 +17,7 @@
                 <span class="text-body-1 text-high-emphasis">¥ {{ summary.month_income }}</span>
               </v-col>
               <v-col cols="12">
-                <v-btn class="bg-primary mt-1" rounded="xs">
+                <v-btn class="bg-primary mt-1" rounded="xs" @click="dateFilteringDetails('month')">
                   查看详情
                 </v-btn>
               </v-col>
@@ -78,7 +78,7 @@
                         class="float-right"></v-btn>
                     </template>
                     <v-list>
-                      <v-list-item>
+                      <v-list-item @click="dateFilteringDetails('day')">
                         <v-list-item-title>查看详情</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -113,7 +113,7 @@
                         class="float-right"></v-btn>
                     </template>
                     <v-list>
-                      <v-list-item>
+                      <v-list-item @click="dateFilteringDetails('week')">
                         <v-list-item-title>查看详情</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -148,7 +148,7 @@
                         class="float-right"></v-btn>
                     </template>
                     <v-list>
-                      <v-list-item>
+                      <v-list-item @click="dateFilteringDetails('month')">
                         <v-list-item-title>查看详情</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -183,7 +183,7 @@
                         class="float-right"></v-btn>
                     </template>
                     <v-list>
-                      <v-list-item>
+                      <v-list-item @click="dateFilteringDetails('year')">
                         <v-list-item-title>查看详情</v-list-item-title>
                       </v-list-item>
                     </v-list>
@@ -211,7 +211,8 @@
         <v-card class="fill-height pa-2" elevation="4">
           <template #title class="font-weight-bold">收入与支出趋势</template>
           <template #text>
-            <IncomeAndExpenditure :income="echarts_income" :expense="echarts_expense" :title="echarts_title">
+            <IncomeAndExpenditure :income="echarts_income" :expense="echarts_expense" :title="echarts_title"
+              :extra="echarts_extra">
             </IncomeAndExpenditure>
           </template>
         </v-card>
@@ -228,7 +229,9 @@ import { showSnackbar } from '../static/useSnackbar.js'
 import IncomeAndExpenditure from '@/components/echarts/IncomeAndExpenditure.vue'
 import dayjs from 'dayjs'
 import isoWeek from 'dayjs/plugin/isoWeek'
-import isBetween from 'dayjs/plugin/isBetween'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const loading = ref(false)
 const summary = ref({
@@ -248,6 +251,7 @@ const summary = ref({
 const echarts_income = ref([])
 const echarts_expense = ref([])
 const echarts_title = ref([])
+const echarts_extra = ref([])
 
 function getData() {
   httpRequest({
@@ -274,6 +278,7 @@ function getData() {
       echarts_expense.value = []
       res.data.summary.last12_months.forEach((item) => {
         echarts_title.value.push(item.month + '月')
+        echarts_extra.value.push({ 'year': item.year, 'month': item.month })
         echarts_income.value.push(item.income)
         echarts_expense.value.push((item.expense * -1))
       })
@@ -287,7 +292,7 @@ function getData() {
 
 // 时间戳转换
 const formatTime = (timestamp) => {
-    return timestamp ? dayjs.unix(timestamp).format('YYYY-MM-DD HH:mm:ss') : '--'
+  return timestamp ? dayjs.unix(timestamp).format('YYYY-MM-DD HH:mm:ss') : '--'
 }
 function formatRange(type) {
   const now = dayjs()
@@ -311,6 +316,37 @@ function formatRange(type) {
       return ''
   }
   return `${start.format('MM月DD日')} - ${end.format('MM月DD日')}`
+}
+
+function dateFilteringDetails(type) {
+  dayjs.extend(isoWeek)
+  const now = dayjs()
+  let start, end
+  switch (type) {
+    case 'day':
+      start = now.format('YYYY-MM-DD')
+      end = now.format('YYYY-MM-DD')
+      break;
+    case 'week':
+      start = now.startOf('isoWeek').format('YYYY-MM-DD')
+      end = now.endOf('isoWeek').format('YYYY-MM-DD')
+      break
+    case 'month':
+      start = now.startOf('month').format('YYYY-MM-DD')
+      end = now.endOf('month').format('YYYY-MM-DD')
+      break
+    case 'year':
+      start = now.startOf('year').format('YYYY-MM-DD')
+      end = now.endOf('year').format('YYYY-MM-DD')
+      break
+  }
+  router.push({
+    name: 'details',
+    state: {
+      start_date: start,
+      end_date: end
+    }
+  })
 }
 
 onMounted(() => {

@@ -126,7 +126,7 @@
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
                                     <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
-                                        }}</v-tooltip>
+                                    }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
                         </v-main>
@@ -475,6 +475,13 @@ onMounted(() => {
     if (window.innerWidth >= 960) {
         select_drawer.value = true
     }
+    if (history.state.start_date) {
+        start_date.value = history.state.start_date
+    }
+    if (history.state.end_date) {
+        end_date.value = history.state.end_date
+    }
+    history.replaceState(null, '')
 })
 
 onBeforeUnmount(() => {

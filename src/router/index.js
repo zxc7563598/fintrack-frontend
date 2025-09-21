@@ -27,14 +27,17 @@ const routes = [{
     component: BaseLayout,
     children: [
         {
+            name: 'home',
             path: '',
             component: Home,
         },
         {
+            name: 'details',
             path: 'details',
             component: Details,
         },
         {
+            name: 'statistics',
             path: 'statistics',
             component: Statistics,
         },

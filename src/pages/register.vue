@@ -26,7 +26,8 @@
                         @click="registerHandler" :loading="loading">注册账号</v-btn>
                     <div class="mt-4 w-100 d-flex align-center justify-center">
                         已有账号
-                        <a href="/login" class="text-primary text-decoration-none">直接登录</a>
+                        <a href="javascript:;" @click="router.push('/login')"
+                            class="text-primary text-decoration-none">直接登录</a>
                     </div>
                 </v-form>
             </v-col>
@@ -35,11 +36,13 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
-import config from '../static/config';
-import httpRequest from '../static/request.js';
-import { showSnackbar } from '../static/useSnackbar.js'
+import { ref } from 'vue'
+import config from '@/static/config';
+import httpRequest from '@/static/request.js';
+import { showSnackbar } from '@/static/useSnackbar.js'
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 
 // 表单信息
 const formRef = ref(null)
@@ -91,6 +94,36 @@ function registerHandler() {
             }).then((res) => {
                 if (res.code == 0) {
                     loading.value = false;
+                    loginHandler()
+                } else {
+                    showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
+                }
+            }).finally(() => {
+                loading.value = false;
+            })
+        } else {
+            loading.value = false;
+        }
+    })
+}
+
+function loginHandler() {
+    loading.value = true
+    formRef.value.validate().then(isValid => {
+        if (isValid.valid) {
+            httpRequest({
+                url: config.interface.LoginHandler,
+                method: 'post',
+                data: {
+                    'email': email.value,
+                    'password': password.value
+                },
+            }).then((res) => {
+                if (res.code == 0) {
+                    loading.value = false;
+                    localStorage.setItem('access_token', res.data.access_token)
+                    localStorage.setItem('refresh_token', res.data.refresh_token)
+                    router.push('/')
                 } else {
                     showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
                 }

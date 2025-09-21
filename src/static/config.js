@@ -1,4 +1,4 @@
-import { detectEnvironment, logEnvironmentInfo } from '../utils/environment.js'
+import { detectEnvironment, logEnvironmentInfo } from '@/utils/environment.js'
 
 // 在开发环境下打印环境信息
 logEnvironmentInfo()

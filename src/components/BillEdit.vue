@@ -111,9 +111,9 @@
 </template>
 <script setup>
 import { ref, watch, computed } from 'vue'
-import config from '../static/config';
-import httpRequest from '../static/request.js';
-import { showSnackbar } from '../static/useSnackbar.js'
+import config from '@/static/config';
+import httpRequest from '@/static/request.js';
+import { showSnackbar } from '@/static/useSnackbar.js'
 import dayjs from 'dayjs'
 
 const props = defineProps({

@@ -191,9 +191,9 @@
 </template>
 <script setup>
 import { ref } from 'vue'
-import config from '../../static/config';
-import httpRequest from '../../static/request.js';
-import { showSnackbar } from '../../static/useSnackbar.js'
+import config from '@/static/config';
+import httpRequest from '@/static/request.js';
+import { showSnackbar } from '@/static/useSnackbar.js'
 import demoImage1 from '@/assets/bill/alipay/0001.png'
 import demoImage2 from '@/assets/bill/alipay/0002.png'
 import demoImage3 from '@/assets/bill/alipay/0003.jpg'

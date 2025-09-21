@@ -41,19 +41,93 @@
                 </div>
             </v-stepper-item>
         </v-stepper-header>
-        <v-container>
-            <v-row>
-                <v-col cols="12" v-if="step == 0">
-                    <v-list>
-                        <v-list-item>1 - 在支付宝App选择 “我的”，然后点击 “账单”</v-list-item>
-                        <v-list-item>2 - 在新的页面中点击右上角打开菜单，然后选择 “开具交易流水证明”</v-list-item>
-                        <v-list-item>3 - 在新的页面中选择 “用于个人对账”，然后点击 “申请”</v-list-item>
-                        <v-list-item>4 - 在新的页面中设置导出的交易时间范围，然后点击 “下一步”</v-list-item>
-                        <v-list-item>5 - 在新的页面中输入要接收导出数据的电子邮箱地址，然后点击 “发送”</v-list-item>
-                        <v-list-item>6 - 若上一步提交成功，会在新的页面提示申请已提交，然后点击 “完成”</v-list-item>
-                        <v-list-item>7 - 打开第5步填写的邮箱，下载由支付宝发送的导出数据 zip 压缩文件。然后返回支付宝App首页，选择 “消息”，在 “服务消息”
-                            中可以查看该压缩文件的密码，使用该密码解压缩后即为导出的 csv</v-list-item>
-                    </v-list>
+        <v-container class="pt-0">
+            <v-row class="pt-0">
+                <v-col class="pt-0 pb-0" cols="12" v-if="step == 0">
+                    <v-timeline side="end" density="compact" class="h-auto w-100">
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-1" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第一步：打开支付宝
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(1)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>在支付宝App选择 “我的”，然后点击 “账单”.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-2" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第二步：开局交易流水证明
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(2)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>在新的页面中点击右上角打开菜单，然后选择 “开具交易流水证明”.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-3" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第三步：用于个人对账
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(3)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>在新的页面中选择 “用于个人对账”，然后点击 “申请”.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-4" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第四步：选择交易时间
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(4)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>在新的页面中设置导出的交易时间范围，然后点击 “下一步”.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-5" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第五步：确认邮箱地址
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(5)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>在新的页面中输入要接收导出数据的电子邮箱地址，然后点击 “发送”.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-6" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第六步：下载账单文件
+                                    <v-icon class="text-h6 ml-2 cursor-pointer float-right"
+                                        @click="previewImage(6)">mdi-file-cloud-outline</v-icon>
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>打开邮箱，下载由支付宝发送的账单压缩包，密码可以在支付宝App “消息” 中查看.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                        <v-timeline-item dot-color="primary" icon="mdi-numeric-7" fill-dot class="w-100">
+                            <v-card class="w-100" density="compact">
+                                <v-card-title class="text-h6 bg-primary">
+                                    第七步：上传账单文件
+                                </v-card-title>
+                                <v-card-text class="text-primary mt-2">
+                                    <p>解压文件，得到 csv 账单文件，在后续步骤中将账单文件上传.</p>
+                                </v-card-text>
+                            </v-card>
+                        </v-timeline-item>
+                    </v-timeline>
                 </v-col>
                 <v-col cols="12" v-if="step == 1">
                     <v-file-input accept=".csv,text/csv" density="compact" variant="underlined" label="上传 CSV 文件"
@@ -111,12 +185,21 @@
             </v-row>
         </v-container>
     </v-stepper>
+    <v-dialog v-model="imageDialog" max-width="80wh">
+        <v-img :src="imageUrl" max-height="70vh" max-width="80wh" contain @click="imageDialog = false"></v-img>
+    </v-dialog>
 </template>
 <script setup>
 import { ref } from 'vue'
 import config from '../../static/config';
 import httpRequest from '../../static/request.js';
 import { showSnackbar } from '../../static/useSnackbar.js'
+import demoImage1 from '@/assets/bill/alipay/0001.png'
+import demoImage2 from '@/assets/bill/alipay/0002.png'
+import demoImage3 from '@/assets/bill/alipay/0003.jpg'
+import demoImage4 from '@/assets/bill/alipay/0004.jpg'
+import demoImage5 from '@/assets/bill/alipay/0005.jpg'
+import demoImage6 from '@/assets/bill/alipay/0006.png'
 
 const loading = ref(false)
 
@@ -219,5 +302,35 @@ function store(path) {
     }).finally(() => {
         loading.value = false;
     })
+}
+
+// 步骤预览
+const imageUrl = ref('')
+const imageDialog = ref(false)
+function previewImage(num) {
+    switch (num) {
+        case 1:
+            imageUrl.value = demoImage1
+            break;
+        case 2:
+            imageUrl.value = demoImage2
+            break;
+        case 3:
+            imageUrl.value = demoImage3
+            break;
+        case 4:
+            imageUrl.value = demoImage4
+            break;
+        case 5:
+            imageUrl.value = demoImage5
+            break;
+        case 6:
+            imageUrl.value = demoImage6
+            break;
+        default:
+            return false
+            break;
+    }
+    imageDialog.value = true
 }
 </script>

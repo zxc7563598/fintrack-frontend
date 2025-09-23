@@ -118,10 +118,11 @@ onMounted(() => {
             </v-row>
             <v-row dense>
                 <v-col cols="12">
-                    <v-btn block color="primary" class="mt-2" :loading="loading" @click="storePaymentMethod">保存变更</v-btn>
+                    <v-btn block color="primary" class="mt-2" :loading="loading"
+                        @click="storePaymentMethod">保存变更</v-btn>
                 </v-col>
             </v-row>
         </v-card-text>
     </v-card>
-    <UserSettings v-model="userSettingsDialog"></UserSettings>
+    <UserSettings v-model="userSettingsDialog" :option="'deepseek'"></UserSettings>
 </template>

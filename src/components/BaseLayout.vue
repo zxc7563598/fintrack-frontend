@@ -59,8 +59,8 @@
             <router-view />
         </v-main>
     </v-app>
-    <UserSettings v-model="userSettingsDialog"></UserSettings>
-    <ApplicationSettings v-model="applicationSettingsDialog" :option="'email'"></ApplicationSettings>
+    <UserSettings v-model="userSettingsDialog" :option="'user'"></UserSettings>
+    <ApplicationSettings v-model="applicationSettingsDialog" :option="'payment_method'"></ApplicationSettings>
 </template>
 
 <script setup>

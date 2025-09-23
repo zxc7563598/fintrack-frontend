@@ -54,5 +54,16 @@ export default {
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',
         DeleteBillRecordHandler: '/api/bills/delete',
+
+        AccountBalanceCategoryHandler: "/api/statistics/account/category",
+        IncomeCategoryHandler: "/api/statistics/income/category",
+        ExpenseCategoryHandler: "/api/statistics/expense/category",
+        IncomeAccountCategoryHandler: "/api/statistics/income/account/category",
+        ExpenseAccountCategoryHandler: "/api/statistics/expense/account/category",
+        AccountBalanceTrendHandler: "/api/statistics/account-balance/trend",
+        IncomeCategoryTrendHandler: "/api/statistics/income/trend",
+        ExpenseCategoryTrendHandler: "/api/statistics/expense/trend",
+        IncomeAccountTrendHandler: "/api/statistics/income/account/trend",
+        ExpenseAccountTrendHandler: "/api/statistics/expense/account/trend"
     }
 }

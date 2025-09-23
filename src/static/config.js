@@ -54,7 +54,6 @@ export default {
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',
         DeleteBillRecordHandler: '/api/bills/delete',
-
         AccountBalanceCategoryHandler: "/api/statistics/account/category",
         IncomeCategoryHandler: "/api/statistics/income/category",
         ExpenseCategoryHandler: "/api/statistics/expense/category",
@@ -64,6 +63,8 @@ export default {
         IncomeCategoryTrendHandler: "/api/statistics/income/trend",
         ExpenseCategoryTrendHandler: "/api/statistics/expense/trend",
         IncomeAccountTrendHandler: "/api/statistics/income/account/trend",
-        ExpenseAccountTrendHandler: "/api/statistics/expense/account/trend"
+        ExpenseAccountTrendHandler: "/api/statistics/expense/account/trend",
+        GetDeepseekApiKeyHandler: "/api/user/deepseek/api-key",
+        StoreDeepseekApiKeyHandler: "/api/user/deepseek/api-key/store",
     }
 }

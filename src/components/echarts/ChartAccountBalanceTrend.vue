@@ -90,6 +90,21 @@ function getData(start_date, end_date, income_type, counterparty, payment_method
                         label: {
                             backgroundColor: primaryColor
                         }
+                    },
+                    formatter: function (params) {
+                        const filtered = params.filter(p => p.value !== 0);
+                        filtered.sort((a, b) => b.value - a.value);
+                        let tooltipText = params[0].axisValue + '<br/>';
+                        tooltipText += '<table>'
+                        filtered.forEach(p => {
+                            tooltipText += '<tr>'
+                            tooltipText += `<td>${p.marker}</td>`
+                            tooltipText += `<td>${p.seriesName}</td>`
+                            tooltipText += `<td>&nbsp;&nbsp;&nbsp;&nbsp;<b>${formatNumber(p.value)}</b></td>`
+                            tooltipText += '</tr>'
+                        });
+                        tooltipText += '</table>'
+                        return tooltipText;
                     }
                 },
                 legend: {
@@ -127,6 +142,10 @@ function getData(start_date, end_date, income_type, counterparty, payment_method
     }).finally(() => {
         loading.value = false;
     })
+}
+
+function formatNumber(num) {
+    return Number(num).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 }
 
 function handleChartClick(params) {

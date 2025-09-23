@@ -342,7 +342,7 @@ function dateFilteringDetails(type) {
   }
   router.push({
     name: 'details',
-    state: {
+    query: {
       start_date: start,
       end_date: end
     }

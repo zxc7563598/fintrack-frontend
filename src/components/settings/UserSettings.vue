@@ -1,12 +1,10 @@
 <script setup>
 import { ref, watch } from 'vue'
-import httpRequest from '@/static/request.js';
-import config from '@/static/config';
-import { showSnackbar } from '@/static/useSnackbar.js'
 import DeepseekSettings from '@/components/settings/user/DeepseekSettings.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
+    option: { type: String, required: true },
 })
 
 // 窗口启动状态
@@ -34,6 +32,7 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
             <template #text>
                 <div class="d-flex flex-column flex-md-row">
                     <v-tabs v-model="tabs" color="primary" direction="vertical" spaced="end">
+                        <v-tab prepend-icon="mdi-laptop-account" text="账号配置" value="user"></v-tab>
                         <v-tab prepend-icon="mdi-laptop-account" text="AI配置" value="deepseek"></v-tab>
                     </v-tabs>
                     <v-tabs-window v-model="tabs" class="flex-fill">

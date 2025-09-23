@@ -1,6 +1,6 @@
 <script setup>
 import { ref, watch } from 'vue'
-import EmailSettings from '@/components/settings/application/EmailSettings.vue'
+import PaymentMethodSettings from '@/components/settings/application/PaymentMethodSettings.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -35,12 +35,11 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
             <template #text>
                 <div class="d-flex flex-column flex-md-row">
                     <v-tabs v-model="tabs" color="primary" direction="vertical" spaced="end">
-                        <v-tab prepend-icon="mdi-mail" text="邮箱配置" value="email"></v-tab>
-                        <v-tab prepend-icon="mdi-laptop-account" text="AI配置" value="ai"></v-tab>
+                        <v-tab prepend-icon="mdi-laptop-account" text="账户分类整理" value="payment_method"></v-tab>
                     </v-tabs>
                     <v-tabs-window v-model="tabs" class="flex-fill">
-                        <v-tabs-window-item value="email">
-                            <EmailSettings />
+                        <v-tabs-window-item value="payment_method">
+                            <PaymentMethodSettings />
                         </v-tabs-window-item>
                     </v-tabs-window>
                 </div>

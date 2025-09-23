@@ -94,13 +94,29 @@ watch([() => props.income, () => props.expense, () => props.title], ([newIncome,
 })
 
 function handleChartClick(params) {
+    let echarts_income_type = null
+    switch (params.seriesName) {
+        case '收入':
+            echarts_income_type = 1
+            break;
+        case '支出':
+            echarts_income_type = 2
+            break;
+        case '不记收支':
+            echarts_income_type = 3
+            break;
+        case '未知':
+            echarts_income_type = 4
+            break;
+    }
     const year = props.extra[params.dataIndex].year
     const month = props.extra[params.dataIndex].month
     const start = dayjs(`${year}-${month}-01`).startOf('month').format('YYYY-MM-DD')
     const end = dayjs(`${year}-${month}-01`).endOf('month').format('YYYY-MM-DD')
     router.push({
         name: 'details',
-        state: {
+        query: {
+            income_type: echarts_income_type,
             start_date: start,
             end_date: end
         }

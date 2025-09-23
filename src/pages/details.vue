@@ -170,9 +170,11 @@ import httpRequest from '@/static/request.js';
 import config from '@/static/config';
 import { showSnackbar } from '@/static/useSnackbar.js'
 import { useTheme } from 'vuetify'
+import { useRoute } from 'vue-router';
 
 const loading = ref(false)
 const theme = useTheme()
+const route = useRoute()
 
 // 导入弹窗
 const importDialog = ref(false)
@@ -475,13 +477,27 @@ onMounted(() => {
     if (window.innerWidth >= 960) {
         select_drawer.value = true
     }
-    if (history.state.start_date) {
-        start_date.value = history.state.start_date
+    if (route.query?.start_date) {
+        start_date.value = route.query.start_date
     }
-    if (history.state.end_date) {
-        end_date.value = history.state.end_date
+    if (route.query?.end_date) {
+        end_date.value = route.query.end_date
     }
-    history.replaceState(null, '')
+    if (route.query?.income_type) {
+        income_type.value = Number(route.query.income_type)
+    }
+    if (route.query?.counterpartys) {
+        counterpartys.value = Array.isArray(route.query.counterpartys) ? route.query.counterpartys : [route.query.counterpartys]
+    }
+    if (route.query?.payment_method) {
+        payment_method.value = Array.isArray(route.query.payment_method) ? route.query.payment_method : [route.query.payment_method]
+    }
+    if (route.query?.trade_types) {
+        trade_types.value = Array.isArray(route.query.trade_types) ? route.query.trade_types : [route.query.trade_types]
+    }
+    if (route.query?.counterpartys || route.query?.payment_method || route.query?.trade_types) {
+        getDataList({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
+    }
 })
 
 onBeforeUnmount(() => {

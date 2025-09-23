@@ -95,7 +95,6 @@ service.interceptors.response.use(
 			// 如果正在刷新，挂起请求
 			return new Promise(resolve => {
 				addRefreshSubscriber(token => {
-					originalRequest.data.token = token
 					resolve(service(originalRequest))
 				})
 			})

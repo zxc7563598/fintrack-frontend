@@ -91,6 +91,21 @@ pnpm build:wails
 
 ---
 
+## 🔒 密钥信息
+
+项目通过 AES + RSA 混合加密，在正式使用前，您需要通过以下命令生成密钥对
+
+```
+openssl genrsa -out private.pem 2048
+openssl rsa -in private.pem -pubout -out public_key.pem
+```
+
+并将 `public_key.pem` 放置于本项目的 `public` 目录中
+
+> 相对应的 `private.pem` 需要存放在后端项目跟目录中
+
+---
+
 ## 📦 快速开始
 
 ### 克隆项目

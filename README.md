@@ -1,79 +1,123 @@
-# Vuetify (Default)
+# 📊 FinBoard
 
-This is the official scaffolding tool for Vuetify, designed to give you a head start in building your new Vuetify application. It sets up a base template with all the necessary configurations and standard directory structure, enabling you to begin development without the hassle of setting up the project from scratch.
+一个基于 **Vue3 + Vite + Vuetify.js** 和 **Go** 的财务管理应用，支持导入 **支付宝/微信等平台的账单信息**，进行统计和分析。  
+项目同时支持 **Web 应用模式** 和 **Wails 桌面应用模式**，可灵活运行在浏览器或本地桌面环境。
 
-## ❗️ Important Links
+## ✨ 功能特性
 
-- 📄 [Docs](https://vuetifyjs.com/)
-- 🚨 [Issues](https://issues.vuetifyjs.com/)
-- 🏬 [Store](https://store.vuetifyjs.com/)
-- 🎮 [Playground](https://play.vuetifyjs.com/)
-- 💬 [Discord](https://community.vuetifyjs.com)
+- 支持导入 **支付宝/微信账单** 数据
+- 自动分类、统计与图表分析
+- 前后端分离，接口统一，方便二次开发
+- 基于 **Vuetify.js** 的现代化 UI，响应式设计
+- 支持 **Web 服务模式**（浏览器访问）
+- 支持 **Wails 桌面应用模式**（Go 打包成本地应用）
 
-## 💿 Install
+---
 
-Set up your project using your preferred package manager. Use the corresponding command to install the dependencies:
+## 🛠 技术栈
 
-| Package Manager                                                | Command        |
-|---------------------------------------------------------------|----------------|
-| [yarn](https://yarnpkg.com/getting-started)                   | `yarn install` |
-| [npm](https://docs.npmjs.com/cli/v7/commands/npm-install)     | `npm install`  |
-| [pnpm](https://pnpm.io/installation)                          | `pnpm install` |
-| [bun](https://bun.sh/#getting-started)                        | `bun install`  |
+- **前端**: [Vue 3](https://vuejs.org) + [Vite](https://vite.dev) + [Vuetify](https://vuetifyjs.com)
+- **后端**: [Go](https://go.dev) + [Wails](https://wails.io)
+- **构建与运行**: 前后端分离，支持 Web 与桌面两种模式
 
-After completing the installation, your environment is ready for Vuetify development.
+---
 
-## ✨ Features
+## 🚀 前端构建说明
 
-- 🖼️ **Optimized Front-End Stack**: Leverage the latest Vue 3 and Vuetify 3 for a modern, reactive UI development experience. [Vue 3](https://v3.vuejs.org/) | [Vuetify 3](https://vuetifyjs.com/en/)
-- 🗃️ **State Management**: Integrated with [Pinia](https://pinia.vuejs.org/), the intuitive, modular state management solution for Vue.
-- 🚦 **Routing and Layouts**: Utilizes Vue Router for SPA navigation and vite-plugin-vue-layouts for organizing Vue file layouts. [Vue Router](https://router.vuejs.org/) | [vite-plugin-vue-layouts](https://github.com/JohnCampionJr/vite-plugin-vue-layouts)
-- ⚡ **Next-Gen Tooling**: Powered by Vite, experience fast cold starts and instant HMR (Hot Module Replacement). [Vite](https://vitejs.dev/)
-- 🧩 **Automated Component Importing**: Streamline your workflow with unplugin-vue-components, automatically importing components as you use them. [unplugin-vue-components](https://github.com/antfu/unplugin-vue-components)
+前端项目支持两种运行模式：
 
-These features are curated to provide a seamless development experience from setup to deployment, ensuring that your Vuetify application is both powerful and maintainable.
+### 1. Web服务模式
 
-## 💡 Usage
+作为独立的 Web 应用运行，通过 HTTP 请求访问后端 API。
 
-This section covers how to start the development server and build your project for production.
-
-### Starting the Development Server
-
-To start the development server with hot-reload, run the following command. The server will be accessible at [http://localhost:3000](http://localhost:3000):
+#### 开发模式
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
-
-> Add NODE_OPTIONS='--no-warnings' to suppress the JSON import warnings that happen as part of the Vuetify import mapping. If you are on Node [v21.3.0](https://nodejs.org/en/blog/release/v21.3.0) or higher, you can change this to NODE_OPTIONS='--disable-warning=5401'. If you don't mind the warning, you can remove this from your package.json dev script.
-
-### Building for Production
-
-To build your project for production, use:
+#### 构建生产版本
 
 ```bash
-yarn build
+pnpm build:web
+# 或者
+pnpm build
 ```
 
-(Repeat for npm, pnpm, and bun with respective commands.)
+构建后的文件将输出到 `dist/` 目录。
 
-Once the build process is completed, your application will be ready for deployment in a production environment.
+---
 
-## 💪 Support Vuetify Development
+### 2. Wails本地应用模式
 
-This project is built with [Vuetify](https://vuetifyjs.com/en/), a UI Library with a comprehensive collection of Vue components. Vuetify is an MIT licensed Open Source project that has been made possible due to the generous contributions by our [sponsors and backers](https://vuetifyjs.com/introduction/sponsors-and-backers/). If you are interested in supporting this project, please consider:
+作为 Wails 应用的前端，与 Go 后端打包成桌面应用。
 
-- [Requesting Enterprise Support](https://support.vuetifyjs.com/)
-- [Sponsoring John on Github](https://github.com/users/johnleider/sponsorship)
-- [Sponsoring Kael on Github](https://github.com/users/kaelwd/sponsorship)
-- [Supporting the team on Open Collective](https://opencollective.com/vuetify)
-- [Becoming a sponsor on Patreon](https://www.patreon.com/vuetify)
-- [Becoming a subscriber on Tidelift](https://tidelift.com/subscription/npm/vuetify)
-- [Making a one-time donation with Paypal](https://paypal.me/vuetify)
+#### 开发模式
 
-## 📑 License
-[MIT](http://opensource.org/licenses/MIT)
+```bash
+pnpm dev:wails
+```
 
-Copyright (c) 2016-present Vuetify, LLC
+#### 构建Wails版本
+
+```bash
+pnpm build:wails
+```
+
+构建后的文件将输出到 `dist-wails/` 目录。
+
+---
+
+### 部署到 Go 项目
+
+1. 运行 `pnpm build:wails`​
+2. 将 `dist-wails/` 目录中的所有文件复制到 Go 项目的 `frontend/build/` 目录
+3. 在 Go 项目中运行：
+
+    ```bash
+    wails build
+    # 或者
+    wails dev
+    ```
+
+---
+
+## ⚙️ 环境变量
+
+可以通过以下环境变量自定义配置：
+
+- ​`VITE_API_BASE_URL`：API 基础 URL
+- ​`VITE_APP_TITLE`：应用标题
+
+---
+
+## 📦 快速开始
+
+### 克隆项目
+
+```bash
+git clone https://github.com/你的用户名/你的项目名.git
+cd 你的项目名
+```
+
+### 安装依赖
+
+```bash
+pnpm install
+```
+
+### 启动前端开发环境
+
+```bash
+pnpm dev
+```
+
+### 启动后端 (Go + Wails)
+
+```bash
+wails dev
+```
+
+## 📸 截图展示（可选）
+
+> 这里可以放一些账单导入界面、统计报表、桌面应用运行效果的截图。

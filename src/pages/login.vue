@@ -3,7 +3,7 @@
         <v-row no-gutters>
             <!-- 左侧图片区域 (大屏显示) -->
             <v-col cols="12" md="8" class="d-none d-md-flex align-center justify-center position-relative">
-                123123
+                    <v-img width="80%" inline src="@/assets/login.svg" />
             </v-col>
 
             <!-- 右侧登录卡片 -->

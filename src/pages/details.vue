@@ -4,7 +4,7 @@
             <v-col cols="12">
                 <v-card elevation="4" class="fill-height">
                     <v-layout class="rounded rounded-md border h-100">
-                        <v-navigation-drawer elevation="0" class="border-e-thin border-secondary" mobile-breakpoint="md"
+                        <v-navigation-drawer elevation="0" class="border-e-thin" mobile-breakpoint="md"
                             v-model="select_drawer">
                             <v-list class="ml-2 mr-2">
                                 <div v-for="(item, index) in category" :key="index">
@@ -67,7 +67,7 @@
                                 </div>
                             </v-list>
                         </v-navigation-drawer>
-                        <v-app-bar ref="appBar" elevation="0" class="border-b-thin border-secondary app-bar-dynamic"
+                        <v-app-bar ref="appBar" elevation="0" class="border-b-thin app-bar-dynamic"
                             :height="appBarHeight">
                             <template v-slot:prepend>
                                 <v-app-bar-nav-icon @click="select_drawer = !select_drawer"
@@ -79,9 +79,9 @@
                                         <div class="me-3 mt-3">
                                             <span v-if="category_checked == 1">交易列表</span>
                                             <span v-if="category_checked == 2">交易日历</span>
-                                            <v-btn size="small" class="border-thin border-secondary ml-2"
+                                            <v-btn size="small" class="border-thin ml-2"
                                                 @click="openEditDialog(0)">添加</v-btn>
-                                            <v-btn size="small" class="border-thin border-secondary ml-2"
+                                            <v-btn size="small" class="border-thin ml-2"
                                                 @click="importDialog = true">导入</v-btn>
                                         </div>
                                     </v-col>

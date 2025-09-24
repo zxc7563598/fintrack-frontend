@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import DeepseekSettings from '@/components/settings/user/DeepseekSettings.vue'
+import UserSettings from '@/components/settings/user/UserSettings.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -36,6 +37,9 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
                         <v-tab prepend-icon="mdi-laptop-account" text="AI配置" value="deepseek"></v-tab>
                     </v-tabs>
                     <v-tabs-window v-model="tabs" class="flex-fill">
+                        <v-tabs-window-item value="user">
+                            <UserSettings />
+                        </v-tabs-window-item>
                         <v-tabs-window-item value="deepseek">
                             <DeepseekSettings />
                         </v-tabs-window-item>

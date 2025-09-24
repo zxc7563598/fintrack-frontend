@@ -65,7 +65,8 @@ export default {
         ExpenseAccountTrendHandler: "/api/statistics/expense/account/trend",
         GetDeepseekApiKeyHandler: "/api/user/deepseek/api-key",
         StoreDeepseekApiKeyHandler: "/api/user/deepseek/api-key/store",
-
+        GetUserInfoHandler: "/api/user/info",
+        StoreUserInfoHandler: "/api/user/info/store",
         GetPaymentMethodHandler: "/api/user/payment-method",
         OrganizePaymentMethodHandler: "/api/user/payment-method/organize",
         StorePaymentMethodHandler: "/api/user/payment-method/store"

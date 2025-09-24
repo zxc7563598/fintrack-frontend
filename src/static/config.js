@@ -18,7 +18,6 @@ function getBaseUrl() {
 // 获取应用标题
 function getAppTitle() {
     const mode = detectEnvironment()
-
     switch (mode) {
         case 'wails':
             return import.meta.env.VITE_APP_TITLE || 'FinBoard'

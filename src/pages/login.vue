@@ -3,7 +3,7 @@
         <v-row no-gutters>
             <!-- 左侧图片区域 (大屏显示) -->
             <v-col cols="12" md="8" class="d-none d-md-flex align-center justify-center position-relative">
-                    <v-img width="80%" inline src="@/assets/login.svg" />
+                <v-img width="80%" inline src="@/assets/login.svg" />
             </v-col>
 
             <!-- 右侧登录卡片 -->
@@ -17,14 +17,12 @@
                         class="mt-4" :rules="emailRules" v-model="email" type="email"></v-text-field>
                     <v-text-field :loading="loading" color="primary" density="compact" label="密码" variant="outlined"
                         class="mt-4" type="password" :rules="passwordRules" v-model="password"></v-text-field>
-                    <div class="mt-4 w-100 d-flex">
-                        <a href="javascript:;" class="text-primary ml-auto text-decoration-none">忘记密码？</a>
-                    </div>
                     <v-btn variant="flat" color="primary" class="mt-4" block @click="loginHandler"
                         :loading="loading">登陆</v-btn>
                     <div class="mt-4 w-100 d-flex align-center justify-center">
                         还没有账号？
-                        <a href="javascript:;" @click="router.push('/register')" class="text-primary text-decoration-none">创建新账号</a>
+                        <a href="javascript:;" @click="router.push('/register')"
+                            class="text-primary text-decoration-none">创建新账号</a>
                     </div>
                 </v-form>
             </v-col>

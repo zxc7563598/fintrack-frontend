@@ -102,7 +102,7 @@ openssl rsa -in private.pem -pubout -out public_key.pem
 
 并将 `public_key.pem` 放置于本项目的 `public` 目录中
 
-> 相对应的 `private.pem` 需要存放在后端项目跟目录中
+> 相对应的 `private.pem` 需要存放在后端项目根目录中
 
 ---
 

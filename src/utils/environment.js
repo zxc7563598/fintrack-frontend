@@ -12,16 +12,13 @@ export function detectEnvironment() {
     if (window.runtime && window.runtime.Window) {
         return 'wails'
     }
-    
     // 检查构建时定义的模式
     if (typeof __WAILS_MODE__ !== 'undefined' && __WAILS_MODE__) {
         return 'wails'
     }
-    
     // 检查URL参数或环境变量
     const urlParams = new URLSearchParams(window.location.search)
-    const mode = urlParams.get('mode') || import.meta.env.VITE_APP_MODE || 'web'
-    
+    const mode = urlParams.get('mode') || 'web'
     return mode
 }
 

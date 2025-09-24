@@ -21,10 +21,10 @@ function getAppTitle() {
 
     switch (mode) {
         case 'wails':
-            return import.meta.env.VITE_APP_TITLE || '财务管理系统'
+            return import.meta.env.VITE_APP_TITLE || 'FinBoard'
         case 'web':
         default:
-            return import.meta.env.VITE_APP_TITLE || '财务管理系统'
+            return import.meta.env.VITE_APP_TITLE || 'FinBoard'
     }
 }
 

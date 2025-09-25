@@ -61,7 +61,7 @@ export default defineConfig(({ mode }) => {
     build: {
       // Wails模式下的特殊构建配置
       ...(isWailsMode && {
-        outDir: 'dist-wails',
+        outDir: 'build',
         rollupOptions: {
           output: {
             // 确保资源路径正确

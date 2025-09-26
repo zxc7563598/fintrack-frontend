@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from 'vue'
 import DeepseekSettings from '@/components/settings/user/DeepseekSettings.vue'
-import UserSettings from '@/components/settings/user/UserSettings.vue'
+import UserInfoSettings from '@/components/settings/user/UserInfoSettings.vue'
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -38,7 +38,7 @@ watch(isActive, (v) => { emit('update:modelValue', v) })
                     </v-tabs>
                     <v-tabs-window v-model="tabs" class="flex-fill">
                         <v-tabs-window-item value="user">
-                            <UserSettings />
+                            <UserInfoSettings />
                         </v-tabs-window-item>
                         <v-tabs-window-item value="deepseek">
                             <DeepseekSettings />

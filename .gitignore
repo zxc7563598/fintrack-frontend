@@ -24,3 +24,4 @@ pnpm-debug.log*
 /public/public_key.pem
 /dist-wails
 /build
+.env

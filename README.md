@@ -84,7 +84,7 @@ pnpm build:wails
 
 ## ⚙️ 环境变量
 
-可以通过以下环境变量自定义配置：
+可以在 .env 中通过以下环境变量自定义配置：
 
 - ​`VITE_API_BASE_URL`：API 基础 URL
 - ​`VITE_APP_TITLE`：应用标题
@@ -96,8 +96,8 @@ pnpm build:wails
 项目通过 AES + RSA 混合加密，在正式使用前，您需要通过以下命令生成密钥对
 
 ```
-openssl genrsa -out private.pem 2048
-openssl rsa -in private.pem -pubout -out public_key.pem
+openssl genpkey -algorithm RSA -out private.pem -pkeyopt rsa_keygen_bits:2048
+openssl pkey -in private.pem -pubout -out frontend/public/public_key.pem
 ```
 
 并将 `public_key.pem` 放置于本项目的 `public` 目录中

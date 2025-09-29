@@ -6,6 +6,8 @@
           <template #title>
             <span class="text-h5 font-weight-bold">九月·</span>
             <span class="font-weight-bold text-body-1">支出</span>
+            <v-btn class="float-right" icon="mdi-plus" density="compact" size="small"
+              @click="billImportDialog = true"></v-btn>
           </template>
           <template #text>
             <v-row dense>
@@ -218,6 +220,7 @@
         </v-card>
       </v-col>
     </v-row>
+    <BillImport v-model="billImportDialog"></BillImport>
   </v-container>
 </template>
 
@@ -230,8 +233,10 @@ import IncomeAndExpenditure from '@/components/echarts/IncomeAndExpenditure.vue'
 import dayjs from 'dayjs'
 import isoWeek from 'dayjs/plugin/isoWeek'
 import { useRouter } from 'vue-router';
+import BillImport from '@/components/BillImport.vue'
 
 const router = useRouter()
+const billImportDialog = ref(false)
 
 const loading = ref(false)
 const summary = ref({

@@ -46,6 +46,10 @@
                             @click="applicationSettingsDialog = true">
                             <v-list-item-title>应用设置</v-list-item-title>
                         </v-list-item>
+                        <v-list-item :value="'export'" slim prepend-icon="mdi-file-export-outline" color="primary"
+                            @click="recordExportDialog = true">
+                            <v-list-item-title>数据导出</v-list-item-title>
+                        </v-list-item>
                         <v-divider></v-divider>
                         <v-list-item :value="'loginout'" slim prepend-icon="mdi-account-arrow-down-outline"
                             color="primary">
@@ -61,6 +65,7 @@
     </v-app>
     <UserSettings v-model="userSettingsDialog" :option="'user'"></UserSettings>
     <ApplicationSettings v-model="applicationSettingsDialog" :option="'payment_method'"></ApplicationSettings>
+    <RecordExport v-model="recordExportDialog"></RecordExport>
 </template>
 
 <script setup>
@@ -69,6 +74,7 @@ import { useRoute, useRouter } from 'vue-router'
 import config from '@/static/config';
 import UserSettings from '@/components/settings/UserSettings.vue'
 import ApplicationSettings from '@/components/settings/ApplicationSettings.vue'
+import RecordExport from '@/components/settings/RecordExport.vue'
 
 const router = useRouter();
 const route = useRoute()
@@ -92,6 +98,7 @@ const menuItems = [
 // 控制弹窗
 const userSettingsDialog = ref(false)
 const applicationSettingsDialog = ref(false)
+const recordExportDialog = ref(false)
 
 function logOut() {
     localStorage.removeItem('access_token')

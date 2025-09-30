@@ -79,10 +79,14 @@
                                         <div class="me-3 mt-3">
                                             <span v-if="category_checked == 1">交易列表</span>
                                             <span v-if="category_checked == 2">交易日历</span>
-                                            <v-btn size="small" class="border-thin ml-2"
-                                                @click="openEditDialog(0)">添加</v-btn>
-                                            <v-btn size="small" class="border-thin ml-2"
-                                                @click="importDialog = true">导入</v-btn>
+                                            <v-btn size="small" color="primary" class="ml-2" @click="openEditDialog(0)"
+                                                variant="outlined" :loading="loading">添加</v-btn>
+                                            <v-btn size="small" color="primary" class="ml-2"
+                                                @click="importDialog = true" variant="outlined"
+                                                :loading="loading">导入</v-btn>
+                                            <v-btn size="small" color="primary" class="ml-2" variant="tonal"
+                                                prepend-icon="mdi-owl" :loading="loading"
+                                                @click="AnalysisBill">AI账单分析</v-btn>
                                         </div>
                                     </v-col>
                                     <v-col cols="12" md="6">
@@ -126,7 +130,7 @@
                                 <template #item.product_name="{ item }">
                                     {{ item.product_name }}
                                     <v-tooltip v-if="item.remark" activator="parent" location="top">{{ item.remark
-                                    }}</v-tooltip>
+                                        }}</v-tooltip>
                                 </template>
                             </v-data-table-server>
                         </v-main>
@@ -159,6 +163,7 @@
     </v-container>
     <BillImport v-model="importDialog"></BillImport>
     <BillEdit v-model="editDialog" :id="editId"></BillEdit>
+    <BillAnalysis v-model="analysisDialog" :content="analysisContent"></BillAnalysis>
 </template>
 
 <script setup>
@@ -171,10 +176,13 @@ import config from '@/static/config';
 import { showSnackbar } from '@/static/useSnackbar.js'
 import { useTheme } from 'vuetify'
 import { useRoute } from 'vue-router';
+import BillAnalysis from "@/components/BillAnalysis.vue";
 
 const loading = ref(false)
 const theme = useTheme()
 const route = useRoute()
+
+const aiReport = ref(`加载中`);
 
 // 导入弹窗
 const importDialog = ref(false)
@@ -184,6 +192,8 @@ function openEditDialog(id = 0) {
     editId.value = id
     editDialog.value = true
 }
+const analysisDialog = ref(false)
+const analysisContent = ref('')
 
 // 每行点击
 function onRowClick(event, row) {
@@ -386,19 +396,48 @@ function getDataList({ page, itemsPerPage, sortBy }) {
         loading.value = false;
     })
 }
+
+// AI分析
+function AnalysisBill() {
+    analysisDialog.value = true;
+    analysisContent.value = '';
+    loading.value = true
+    httpRequest({
+        url: config.interface.AnalysisBillHandler,
+        method: 'post',
+        data: {
+            'start_formatted_date': start_formatted_date.value,
+            'end_formatted_date': end_formatted_date.value,
+            'income_type': income_type.value,
+            'counterpartys': counterpartys.value,
+            'payment_method': payment_method.value,
+            'trade_types': trade_types.value
+        },
+        timeout: 600000
+    }).then((res) => {
+        if (res.code == 0) {
+            analysisContent.value = res.data.report
+        } else {
+            analysisDialog.value = false;
+            showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
+        }
+    }).finally(() => {
+        loading.value = false;
+    })
+}
+
+// 监听内容变更后重新搜索
 watch(
     [start_formatted_date, end_formatted_date, income_type],
     () => {
         getDataList({ page: 1, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
     }
 )
-
 watch(importDialog, (v) => {
     if (!v) {
         getDataList({ page: currentPage.value, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })
     }
 })
-
 watch(editDialog, (v) => {
     if (!v) {
         getDataList({ page: currentPage.value, itemsPerPage: itemsPerPage.value, sortBy: currentSorting.value })

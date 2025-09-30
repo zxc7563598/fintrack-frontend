@@ -8,7 +8,7 @@ function getBaseUrl() {
     const mode = detectEnvironment()
     switch (mode) {
         case 'wails':
-            return 'http://127.0.0.1:9090'
+            return import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:9090'
         case 'web':
         default:
             return import.meta.env.VITE_API_BASE_URL || 'http://127.0.0.1:9090'
@@ -54,6 +54,7 @@ export default {
         StoreBillRecordHandler: '/api/bills/save',
         DeleteBillRecordHandler: '/api/bills/delete',
         ExportBillHandler: '/api/bills/export',
+        AnalysisBillHandler: '/api/bills/analysis',
         AccountBalanceCategoryHandler: "/api/statistics/account/category",
         IncomeCategoryHandler: "/api/statistics/income/category",
         ExpenseCategoryHandler: "/api/statistics/expense/category",

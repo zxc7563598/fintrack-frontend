@@ -3,6 +3,7 @@ import { computed, ref, watch } from 'vue'
 import httpRequest from '@/static/request.js';
 import { showSnackbar } from '@/static/useSnackbar.js'
 import config from '@/static/config';
+import { downloadFile } from '@/utils/download';
 
 const props = defineProps({
     modelValue: { type: Boolean, required: true },
@@ -86,26 +87,15 @@ function exportBill() {
         },
         responseType: 'blob'
     }).then(async (res) => {
-        const contentType = res.headers['content-type'];
+        const contentType = res.headers['content-type']
         if (contentType && contentType.includes('application/json')) {
-            // 错误情况：后端返回 JSON
-            const text = await res.data.text();
-            const json = JSON.parse(text);
-            showSnackbar({ text: json.msg || '导出失败', color: 'error', timeout: 2000 });
-            return;
+            const json = typeof res.data === 'string' ? JSON.parse(res.data) : res.data
+            showSnackbar({ text: json.msg || '导出失败', color: 'error', timeout: 2000 })
+        } else {
+            await downloadFile('账单导出.csv', res.data)
         }
-        // 成功情况：CSV 文件流
-        const blob = new Blob([res.data], { type: 'text/csv;charset=utf-8;' });
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', '账单导出.csv');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        window.URL.revokeObjectURL(url);
-        showSnackbar({ text: '导出成功', color: 'success', timeout: 2000 });
     }).catch((err) => {
+        console.log(err)
         showSnackbar({ text: '请求失败，请稍后再试', color: 'error', timeout: 2000 });
     }).finally(() => {
         loading.value = false

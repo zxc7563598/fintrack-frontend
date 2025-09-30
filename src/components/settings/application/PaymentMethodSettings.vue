@@ -49,8 +49,6 @@ function organizePaymentMethod() {
             Object.entries(res.data.list).forEach(([key, newValue]) => {
                 payment_method.value[payment_method_key[key]].value = newValue
             });
-            console.log(payment_method.value)
-            // res.data
         } else {
             showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
         }

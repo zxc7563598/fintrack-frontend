@@ -53,6 +53,7 @@ export default {
         GetBillInfoHandler: '/api/bills/info',
         StoreBillRecordHandler: '/api/bills/save',
         DeleteBillRecordHandler: '/api/bills/delete',
+        ExportBillHandler: '/api/bills/export',
         AccountBalanceCategoryHandler: "/api/statistics/account/category",
         IncomeCategoryHandler: "/api/statistics/income/category",
         ExpenseCategoryHandler: "/api/statistics/expense/category",

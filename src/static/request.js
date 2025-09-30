@@ -64,6 +64,9 @@ service.interceptors.request.use(
 // 响应拦截器
 service.interceptors.response.use(
 	function (response) {
+		if (response.config?.responseType == 'blob') {
+			return response;
+		}
 		const res = response.data
 		let refresh_code = [
 			"300001",

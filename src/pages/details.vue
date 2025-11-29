@@ -172,6 +172,7 @@ import dayjs from 'dayjs'
 import BillImport from '@/components/BillImport.vue'
 import BillEdit from '@/components/BillEdit.vue'
 import httpRequest from '@/static/request.js';
+import { streamRequest } from '@/static/streamRequest.js'
 import config from '@/static/config';
 import { showSnackbar } from '@/static/useSnackbar.js'
 import { useTheme } from 'vuetify'
@@ -181,8 +182,6 @@ import BillAnalysis from "@/components/BillAnalysis.vue";
 const loading = ref(false)
 const theme = useTheme()
 const route = useRoute()
-
-const aiReport = ref(`加载中`);
 
 // 导入弹窗
 const importDialog = ref(false)
@@ -402,27 +401,25 @@ function AnalysisBill() {
     analysisDialog.value = true;
     analysisContent.value = '';
     loading.value = true
-    httpRequest({
+    streamRequest({
         url: config.interface.AnalysisBillHandler,
-        method: 'post',
-        data: {
-            'start_formatted_date': start_formatted_date.value,
-            'end_formatted_date': end_formatted_date.value,
-            'income_type': income_type.value,
-            'counterpartys': counterpartys.value,
-            'payment_method': payment_method.value,
-            'trade_types': trade_types.value
+        rawData: {
+            start_formatted_date: start_formatted_date.value,
+            end_formatted_date: end_formatted_date.value,
+            income_type: income_type.value,
+            counterpartys: counterpartys.value,
+            payment_method: payment_method.value,
+            trade_types: trade_types.value
         },
-        timeout: 600000
-    }).then((res) => {
-        if (res.code == 0) {
-            analysisContent.value = res.data.report
-        } else {
-            analysisDialog.value = false;
-            showSnackbar({ text: res.msg, color: 'error', timeout: 2000 })
+
+        onMessage(msg) {
+            loading.value = false;
+            analysisContent.value += msg
+        },
+
+        onError(err) {
+            console.error("SSE 错误：", err)
         }
-    }).finally(() => {
-        loading.value = false;
     })
 }
 

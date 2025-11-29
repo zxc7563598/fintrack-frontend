@@ -11,9 +11,7 @@
                     报告生成中...大约需要30秒左右...
                 </div>
                 <div v-else class="text-body-1" style="line-height: 1.7;white-space: pre-line;">
-                    <p v-for="(line, index) in props.content.split('\n')" :key="index" class="mb-2">
-                        {{ line }}
-                    </p>
+                    {{ props.content }}
                 </div>
             </v-card-text>
         </v-card>
